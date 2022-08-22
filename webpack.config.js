@@ -66,11 +66,13 @@ const baseConfig = ({ analyze, mode, compress }) => ({
         // ...deps,
         react: {
           singleton: true,
+          eager: true,
           requiredVersion: deps.react,
         }, 
         "react-dom": {
           singleton: true,
           requiredVersion: deps["react-dom"],
+          eager: true,
         },
       },
     }),
