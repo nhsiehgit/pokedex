@@ -10,14 +10,14 @@ import {
 } from "../../utils/utils";
 import "./PokemonCard.scss";
 
-export default function PokemonCard({ pokemonData, disableClick }) {
+export default function PokemonCard({ pokemonData, disableClick , path}) {
   const { id, name, types } = pokemonData;
   const navigate = useNavigate();
 
   const launchDetailsPage = () => {
     if (disableClick) return;
     scrollToTop();
-    navigate(`${ROUTES.DETAILS}/${id}`);
+    navigate(`${path}${ROUTES.DETAILS}/${id}`);
   };
 
   return (

@@ -16,7 +16,7 @@ const POKEMON_ID = {
   LAST: 898,
 };
 
-const PokemonDetails = () => {
+const PokemonDetails = ({ path }) => {
   const routeParams = useParams();
   const id = +routeParams.id;
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const PokemonDetails = () => {
 
   const launchHomePage = () => {
     documentTitle.reset();
-    navigate(ROUTES.HOME);
+    navigate(`${path}${ROUTES.HOME}`);
   };
 
   const onSelect = (direction) => {
@@ -37,7 +37,7 @@ const PokemonDetails = () => {
     }
 
     if (direction === 1 && isLastPokemon) return;
-    navigate(`${ROUTES.DETAILS}/${id + direction}`);
+    navigate(`${path}${ROUTES.DETAILS}/${id + direction}`);
   };
 
   const onKeyUp = ({ key }) => {
@@ -106,7 +106,7 @@ const PokemonDetails = () => {
 
       <div className="grid-row">
         <div className="card-wrapper">
-          <PokemonCard pokemonData={pokemonData} disableClick />
+          <PokemonCard pokemonData={pokemonData} disableClick path={path}/>
         </div>
         <BioCard />
       </div>

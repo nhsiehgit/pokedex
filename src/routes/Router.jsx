@@ -9,13 +9,13 @@ const PokemonDetails = lazy(() =>
   import(/* webpackPrefetch: true */ "../pages/PokemonDetails/PokemonDetails")
 );
 
-const Router = () => (
-  <PokemonProvider>
+const Router = ({path}) => (
+  <PokemonProvider path={path}>
     <Suspense fallback={<Loader />}>
       <BrowserRouter>
         <Routes>
-          <Route path={ROUTES.HOME} element={<Home />} />
-          <Route path={`${ROUTES.DETAILS}/:id`} element={<PokemonDetails />} />
+          <Route path={`${path}${ROUTES.HOME}`} element={<Home path={path}/>} />
+          <Route path={`${path}${ROUTES.DETAILS}/:id`} element={<PokemonDetails path={path}/>} />
         </Routes>
       </BrowserRouter>
     </Suspense>

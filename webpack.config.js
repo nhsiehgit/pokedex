@@ -5,6 +5,9 @@ const { merge } = require("webpack-merge");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const CompressionPlugin = require("compression-webpack-plugin");
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+
+const deps = require("./package.json").dependencies;
 
 const configMode = (env) => require(`./configs/webpack.${env.mode}`)(env);
 
@@ -12,7 +15,7 @@ const baseConfig = ({ analyze, mode, compress }) => ({
   mode,
   output: {
     path: path.resolve(__dirname, "dist"),
-    publicPath: "/",
+    publicPath: "http://localhost:3000/",
     clean: true,
   },
   resolve: {
@@ -48,6 +51,28 @@ const baseConfig = ({ analyze, mode, compress }) => ({
           },
         },
       ],
+    }),
+    new ModuleFederationPlugin({
+      name: "remote",
+      filename: "remotePokedex.js",
+      remotes: {},
+      exposes: {
+        "./pokeRoot": "./src/index.jsx",  
+        "./pokedex": "./src/routes/Router.jsx",
+        "./pokeHome": "./src/pages/Home/Home.jsx",
+        "./pokeProvider": "./src/contexts/PokemonProvider.jsx",
+      },
+      shared: {
+        // ...deps,
+        react: {
+          singleton: true,
+          requiredVersion: deps.react,
+        }, 
+        "react-dom": {
+          singleton: true,
+          requiredVersion: deps["react-dom"],
+        },
+      },
     }),
     compress &&
       new CompressionPlugin({

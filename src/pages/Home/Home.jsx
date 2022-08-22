@@ -24,7 +24,7 @@ const Nav = () => (
   </Header>
 );
 
-const LandingPage = () => {
+const LandingPage = ({path = ''}) => {
   const { pokemonsList, isLoading, isLoadingNextBatch } = usePokemonState();
   const { loadPokemons } = usePokemonSetter();
   const ref = useIntersectionObserver(loadPokemons, [
@@ -35,9 +35,9 @@ const LandingPage = () => {
   const renderPokemonsList = useMemo(
     () =>
       pokemonsList?.map((data) => (
-        <PokemonCard key={data.id} pokemonData={data} />
+        <PokemonCard key={data.id} pokemonData={data} path={path}/>
       )),
-    [pokemonsList]
+    [pokemonsList, path]
   );
 
   if (isLoading) return <Loader />;

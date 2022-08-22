@@ -42,6 +42,7 @@
     "start": "webpack serve --env mode=development",
     "build": "webpack --env mode=production compress",
     "build:dev": "webpack --env mode=development",
+    "build:start": "cd dist && PORT=3000 npx serve",
     "analyze": "npm run build analyze",
     "prettify": "prettier --write .",
     "lint": "eslint .",

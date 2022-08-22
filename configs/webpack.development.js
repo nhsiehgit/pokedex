@@ -2,6 +2,8 @@ module.exports = (env) => ({
   devtool: "source-map",
   devServer: {
     historyApiFallback: true,
+    port: 3000,
+    allowedHosts: 'all',
   },
   module: {
     rules: [
