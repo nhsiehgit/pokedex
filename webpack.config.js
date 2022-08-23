@@ -7,6 +7,21 @@ const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const CompressionPlugin = require("compression-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 
+class HelloAsyncPlugin {
+  apply(compiler) {
+    compiler.hooks.emit.tapAsync(
+      'HelloAsyncPlugin',
+      (compilation, callback) => {
+        // Do something async...
+        setTimeout(function () {
+          console.log('Done with async work...');
+          callback();
+        }, 10000);
+      }
+    );
+  }
+}
+
 const deps = require("./package.json").dependencies;
 
 const configMode = (env) => require(`./configs/webpack.${env.mode}`)(env);
@@ -76,6 +91,7 @@ const baseConfig = ({ analyze, mode, compress }) => ({
         },
       },
     }),
+    new HelloAsyncPlugin({ options: true }),
     compress &&
       new CompressionPlugin({
         algorithm: "brotliCompress",
