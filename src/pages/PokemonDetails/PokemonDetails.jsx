@@ -49,6 +49,7 @@ const PokemonDetails = ({ path }) => {
 
   useEffect(() => {
     setPokemonId(id);
+    setMove('');
   }, [id]);
 
   useEffect(() => {
@@ -124,11 +125,11 @@ const PokemonDetails = ({ path }) => {
         <SpeciesCard />
       </div>
       <div>
-        <LibButton
+        {/* <LibButton
           label="Get Move"
           onClick={getMove}
           primary
-        />
+        /> */}
         <button type="button" onClick={getMove}>Get Move</button>
         {
           move && <div>Name: {move.move.name}</div>
